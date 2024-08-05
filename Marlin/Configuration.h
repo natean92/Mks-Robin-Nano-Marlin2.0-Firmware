@@ -69,7 +69,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "JEKim" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -139,7 +139,7 @@
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_MKS_ROBIN_NANO_V3
+  #define MOTHERBOARD BOARD_MKS_ROBIN_NANO
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
@@ -192,7 +192,7 @@
 
 // This defines the number of extruders
 // :[0, 1, 2, 3, 4, 5, 6, 7, 8]
-#define EXTRUDERS 2
+#define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
 #define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
@@ -503,6 +503,7 @@
 #define TEMP_SENSOR_REDUNDANT 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
+// 디버깅 테스트 용도로 설정하는 온도 조절 기능
 #define DUMMY_THERMISTOR_998_VALUE  25
 #define DUMMY_THERMISTOR_999_VALUE 100
 
@@ -564,7 +565,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-#define BED_MAXTEMP      150
+#define BED_MAXTEMP      80
 #define CHAMBER_MAXTEMP  60
 
 /**
@@ -573,7 +574,7 @@
  * (especially before PID tuning). Setting the target temperature too close to MAXTEMP guarantees
  * a MAXTEMP shutdown! Use these values to forbid temperatures being set too close to MAXTEMP.
  */
-#define HOTEND_OVERSHOOT 15   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
+#define HOTEND_OVERSHOOT 12   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
 #define BED_OVERSHOOT    10   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
 #define COOLER_OVERSHOOT  2   // (°C) Forbid temperatures closer than OVERSHOOT
 
@@ -589,9 +590,9 @@
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
-  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  //#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
-  //#define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
+  #define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+  #define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+  // #define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
 
   #if ENABLED(PID_PARAMS_PER_HOTEND)
@@ -601,8 +602,8 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
+    #define DEFAULT_Kp  23.26
+    #define DEFAULT_Ki   2.20
     #define DEFAULT_Kd 114.00
   #endif
 #endif // PIDTEMP
@@ -624,7 +625,7 @@
  * heater. If your configuration is significantly different than this and you don't understand
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  */
-//#define PIDTEMPBED
+#define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING 
 
@@ -637,14 +638,14 @@
 #define MAX_BED_POWER 255 // limits duty cycle to bed; 255=full current
 
 #if ENABLED(PIDTEMPBED)
-  //#define MIN_BED_POWER 0
-  //#define PID_BED_DEBUG // Sends debug data to the serial port.
+  // #define MIN_BED_POWER 0
+  #define PID_BED_DEBUG // Sends debug data to the serial port.
 
   // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 13.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
+  #define DEFAULT_bedKp 133.05
+  #define DEFAULT_bedKi 25.79
+  #define DEFAULT_bedKd 171.60
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -778,13 +779,13 @@
 // Almost all printers will be using one per axis. Probes will use one or more of the
 // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
 #define USE_XMIN_PLUG
-// #define USE_YMIN_PLUG
+#define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
 //#define USE_IMIN_PLUG
 //#define USE_JMIN_PLUG
 //#define USE_KMIN_PLUG
 //#define USE_XMAX_PLUG
-#define USE_YMAX_PLUG
+// #define USE_YMAX_PLUG
 //#define USE_ZMAX_PLUG
 //#define USE_IMAX_PLUG
 //#define USE_JMAX_PLUG
@@ -861,19 +862,19 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#define X_DRIVER_TYPE  TMC2209
-#define Y_DRIVER_TYPE  TMC2209
-#define Z_DRIVER_TYPE  TMC2209
+#define X_DRIVER_TYPE  TMC2208
+#define Y_DRIVER_TYPE  TMC2208
+#define Z_DRIVER_TYPE  TMC2208
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE A4988
+#define Z2_DRIVER_TYPE TMC2208
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
 //#define I_DRIVER_TYPE  A4988
 //#define J_DRIVER_TYPE  A4988
 //#define K_DRIVER_TYPE  A4988
 #define E0_DRIVER_TYPE TMC2209
-#define E1_DRIVER_TYPE TMC2209
+// #define E1_DRIVER_TYPE TMC2209
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
@@ -927,14 +928,14 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 93 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 415 }
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 200, 200, 4, 100 }
+#define DEFAULT_MAX_FEEDRATE          { 200, 200, 4, 70 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -947,7 +948,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 200, 2000 }
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 1000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -976,9 +977,9 @@
  */
 #define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
-  #define DEFAULT_XJERK 13.0
-  #define DEFAULT_YJERK 13.0
-  #define DEFAULT_ZJERK  0.3
+  #define DEFAULT_XJERK 20.0
+  #define DEFAULT_YJERK 20.0
+  #define DEFAULT_ZJERK  0.4
   //#define DEFAULT_IJERK  0.3
   //#define DEFAULT_JJERK  0.3
   //#define DEFAULT_KJERK  0.3
@@ -1050,7 +1051,7 @@
  *      - normally-closed switches to GND and D32.
  *      - normally-open switches to 5V and D32.
  */
-//#define Z_MIN_PROBE_PIN 32 // Pin 32 is the RAMPS default
+// #define Z_MIN_PROBE_PIN 32 // Pin 32 is the RAMPS default
 
 /**
  * Probe Type
@@ -1064,7 +1065,7 @@
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
-//#define PROBE_MANUALLY
+#define PROBE_MANUALLY
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
@@ -1087,7 +1088,7 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-#define BLTOUCH
+// #define BLTOUCH
 
 /**
  * Touch-MI Probe by hotends.fr
@@ -1179,11 +1180,11 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -20, -1, -1.2  }
+#define NOZZLE_TO_PROBE_OFFSET { 0, 0, 0  }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 20
+#define PROBING_MARGIN 10
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (133*60)
@@ -1247,8 +1248,8 @@
  * Example: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
  *     But: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
  */
-#define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
-#define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
+#define Z_CLEARANCE_DEPLOY_PROBE   20 // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_BETWEEN_PROBES 20 // Z Clearance between probe points
 #define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
@@ -1321,8 +1322,8 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR false
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
 //#define INVERT_I_DIR false
 //#define INVERT_J_DIR false
@@ -1369,8 +1370,8 @@
 // @section machine
 
 // The size of the printable area
-#define X_BED_SIZE 240
-#define Y_BED_SIZE 230
+#define X_BED_SIZE 220
+#define Y_BED_SIZE 220
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1378,7 +1379,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 180
+#define Z_MAX_POS 250
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -1536,9 +1537,9 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR
+// #define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
-//#define MESH_BED_LEVELING
+#define MESH_BED_LEVELING
 
 /**
  * Normally G28 leaves leveling disabled on completion. Enable one of
@@ -1551,7 +1552,7 @@
 /**
  * Auto-leveling needs preheating
  */
-//#define PREHEAT_BEFORE_LEVELING
+#define PREHEAT_BEFORE_LEVELING
 #if ENABLED(PREHEAT_BEFORE_LEVELING)
   #define LEVELING_NOZZLE_TEMP 120   // (°C) Only applies to E0 at this time
   #define LEVELING_BED_TEMP     50
@@ -1566,7 +1567,7 @@
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL, PROBE_MANUALLY)
   // Set a height for the start of manual adjustment
-  #define MANUAL_PROBE_START_Z 0.2  // (mm) Comment out to use the last-measured height
+  #define MANUAL_PROBE_START_Z 0  // (mm) Comment out to use the last-measured height
 #endif
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_BILINEAR, AUTO_BED_LEVELING_UBL)
@@ -1603,7 +1604,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 2
+  #define GRID_MAX_POINTS_X 4
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1667,11 +1668,11 @@
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-//#define LCD_BED_LEVELING
+#define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
-  #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
-  #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
+  #define MESH_EDIT_Z_STEP  -0.001 // (mm) Step size while manually probing Z axis.
+  #define LCD_PROBE_Z_RANGE 20    // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
   //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
 
@@ -1737,11 +1738,12 @@
  * - Allows Z homing only when XY positions are known and trusted.
  * - If stepper drivers sleep, XY homing may be required again before Z homing.
  */
-#define Z_SAFE_HOMING
+// 비엘 터치
+// #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT Y_CENTER  // Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)  // X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT ((X_BED_SIZE) / 2)  // Y point for Z homing
 #endif
 
 // Homing speeds (mm/min)
@@ -1855,15 +1857,15 @@
 //
 // Preheat Constants - Up to 5 are supported without changes
 //
-#define PREHEAT_1_LABEL       "PLA"
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED     70
-#define PREHEAT_1_TEMP_CHAMBER 35
+#define PREHEAT_1_LABEL       "Lvl"
+#define PREHEAT_1_TEMP_HOTEND 110
+#define PREHEAT_1_TEMP_BED     50
+#define PREHEAT_1_TEMP_CHAMBER  0
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "ABS"
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_LABEL       "PLA"
+#define PREHEAT_2_TEMP_HOTEND 180
+#define PREHEAT_2_TEMP_BED     50
 #define PREHEAT_2_TEMP_CHAMBER 35
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
@@ -2640,7 +2642,7 @@
 // 480x320, 3.5", SPI Display From MKS
 // Normally used in MKS Robin Nano V2
 //
-#define MKS_TS35_V2_0
+// #define MKS_TS35_V2_0
 
 //
 // 320x240, 2.4", FSMC Display From MKS
@@ -2664,7 +2666,7 @@
 // 480x320, 3.5", FSMC Display From MKS
 // Normally used in MKS Robin Nano V1.2
 //
-// #define MKS_ROBIN_TFT35
+#define MKS_ROBIN_TFT35
 
 //
 // 480x272, 4.3", FSMC Display From MKS

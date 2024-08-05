@@ -273,7 +273,7 @@
  * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_PERIOD 70        // Seconds
   #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
   //#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
@@ -1490,7 +1490,7 @@
    *
    * [1] On AVR an interrupt-capable pin is best for UHS3 compatibility.
    */
-  #define USB_FLASH_DRIVE_SUPPORT
+  // #define USB_FLASH_DRIVE_SUPPORT
   #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
     /**
      * USB Host Shield Library
@@ -1550,7 +1550,7 @@
   //#define NO_SD_DETECT
 
   // Multiple volume support - EXPERIMENTAL.
-  #define MULTI_VOLUME
+  // #define MULTI_VOLUME
   #if ENABLED(MULTI_VOLUME)
     #define VOLUME_SD_ONBOARD       1
     #define VOLUME_USB_FLASH_DRIVE  2
@@ -1863,15 +1863,15 @@
 #define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
-  //#define BABYSTEP_WITHOUT_HOMING
-  //#define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement).
+  #define BABYSTEP_WITHOUT_HOMING
+  #define BABYSTEP_ALWAYS_AVAILABLE       // Allow babystepping at all times (not just during movement).
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
   //#define BABYSTEP_MILLIMETER_UNITS       // Specify BABYSTEP_MULTIPLICATOR_(XY|Z) in mm instead of micro-steps
   #define BABYSTEP_MULTIPLICATOR_Z  1       // (steps or mm) Steps or millimeter distance for each Z babystep
   #define BABYSTEP_MULTIPLICATOR_XY 1       // (steps or mm) Steps or millimeter distance for each XY babystep
 
-  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -1958,10 +1958,10 @@
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
   // Override the mesh area if the automatic (max) area is too large
-  //#define MESH_MIN_X MESH_INSET
-  //#define MESH_MIN_Y MESH_INSET
-  //#define MESH_MAX_X X_BED_SIZE - (MESH_INSET)
-  //#define MESH_MAX_Y Y_BED_SIZE - (MESH_INSET)
+  #define MESH_MIN_X 10
+  #define MESH_MIN_Y 10
+  #define MESH_MAX_X X_BED_SIZE - (MESH_INSET)
+  #define MESH_MAX_Y Y_BED_SIZE - (MESH_INSET)
 #endif
 
 #if BOTH(AUTO_BED_LEVELING_UBL, EEPROM_SETTINGS)
@@ -4041,8 +4041,8 @@
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
   //#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
   //#define OTASUPPORT          // Support over-the-air firmware updates
-  //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
-
+  #define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
+  #include "Configuration_Secure.h"
   /**
    * To set a default WiFi SSID / Password, create a file called Configuration_Secure.h with
    * the following defines, customized for your network. This specific file is excluded via
