@@ -198,7 +198,7 @@
 #define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
 
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
-#define SINGLENOZZLE
+// #define SINGLENOZZLE
 
 // Save and restore temperature and fan speed on tool-change.
 // Set standby for the unselected tool with M104/106/109 T...
@@ -862,19 +862,19 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#define X_DRIVER_TYPE  TMC2208
-#define Y_DRIVER_TYPE  TMC2208
-#define Z_DRIVER_TYPE  TMC2208
+#define X_DRIVER_TYPE  TMC2208_STANDALONE
+#define Y_DRIVER_TYPE  TMC2208_STANDALONE
+#define Z_DRIVER_TYPE  TMC2208_STANDALONE
 //#define X2_DRIVER_TYPE A4988
 //#define Y2_DRIVER_TYPE A4988
-#define Z2_DRIVER_TYPE TMC2208
+#define Z2_DRIVER_TYPE TMC2208_STANDALONE
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
 //#define I_DRIVER_TYPE  A4988
 //#define J_DRIVER_TYPE  A4988
 //#define K_DRIVER_TYPE  A4988
-#define E0_DRIVER_TYPE TMC2209
-// #define E1_DRIVER_TYPE TMC2209
+#define E0_DRIVER_TYPE TMC2208_STANDALONE
+// #define E1_DRIVER_TYPE TMC2208_STANDALONE
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
 //#define E4_DRIVER_TYPE A4988
@@ -1361,7 +1361,7 @@
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
 #define X_HOME_DIR -1
-#define Y_HOME_DIR 1
+#define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 //#define I_HOME_DIR -1
 //#define J_HOME_DIR -1
@@ -1668,7 +1668,7 @@
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-#define LCD_BED_LEVELING
+// #define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  -0.001 // (mm) Step size while manually probing Z axis.

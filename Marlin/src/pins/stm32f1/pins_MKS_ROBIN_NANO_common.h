@@ -208,3 +208,7 @@
   #define SPI_FLASH_MISO_PIN                PB14
   #define SPI_FLASH_SCK_PIN                 PB13
 #endif
+
+// TX, RX 핀 설정
+// #define X_SERIAL_TX_PIN PB10
+// #define X_SERIAL_RX_PIN PB11
